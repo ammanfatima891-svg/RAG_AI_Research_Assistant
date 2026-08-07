@@ -1,0 +1,51 @@
+# --- Secrets & environment (CRITICAL) ---
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+build/
+dist/
+
+# --- Virtual environment ---
+venv/
+env/
+.venv/
+ENV/
+
+# --- IDE / editor ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# --- Embedding model cache (sentence-transformers downloads locally) ---
+.cache/
+models/
+*.bin
+*.safetensors
+
+# --- Data (often large / sensitive PDFs, chunks, etc.) ---
+data/
+*.pdf
+*.csv
+*.json
+!requirements.json
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Jupyter (if you use notebooks for testing) ---
+.ipynb_checkpoints/
+
+# --- OS junk ---
+Thumbs.db
