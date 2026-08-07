@@ -1,8 +1,12 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 from pgvector.psycopg2 import register_vector
 from sentence_transformers import SentenceTransformer
 from load_documents import load_pdfs
 from chunk_documents import chunk_documents
+
+load_dotenv()  # reads .env into environment variables
 
 
 def clean(value):
@@ -19,11 +23,11 @@ def build_vector_store():
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
     conn = psycopg2.connect(
-        dbname="postgres",
-        user="postgres.tyezxdhjyaapraatlsmg",
-        password="admin1234@AmanFatima",
-        host="aws-0-ap-northeast-1.pooler.supabase.com",
-        port="5432",          # session pooler, not 6543
+        dbname=os.getenv("PGDATABASE"),
+        user=os.getenv("PGUSER"),
+        password=os.getenv("PGPASSWORD"),
+        host=os.getenv("PGHOST"),
+        port=os.getenv("PGPORT"),
         sslmode="require"
     )
 

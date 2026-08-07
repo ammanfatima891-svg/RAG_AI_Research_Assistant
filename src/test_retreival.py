@@ -1,17 +1,22 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 from pgvector.psycopg2 import register_vector
 from sentence_transformers import SentenceTransformer
+
+load_dotenv()  # reads .env into environment variables
+
 
 def test_query(question, n_results=3):
     model = SentenceTransformer("all-MiniLM-L6-v2")
     question_embedding = model.encode(question).tolist()
 
     conn = psycopg2.connect(
-        dbname="postgres",
-        user="postgres.tyezxdhjyaapraatlsmg",
-        password="admin1234@AmanFatima",
-        host="aws-0-ap-northeast-1.pooler.supabase.com",
-        port="5432",          # session pooler, not 6543
+        dbname=os.getenv("PGDATABASE"),
+        user=os.getenv("PGUSER"),
+        password=os.getenv("PGPASSWORD"),
+        host=os.getenv("PGHOST"),
+        port=os.getenv("PGPORT"),
         sslmode="require"
     )
     register_vector(conn)
@@ -37,6 +42,7 @@ def test_query(question, n_results=3):
 
     cur.close()
     conn.close()
+
 
 if __name__ == "__main__":
     test_query("What datasets were used for evaluation?")
